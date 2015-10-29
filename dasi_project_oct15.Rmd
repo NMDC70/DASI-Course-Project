@@ -1,5 +1,5 @@
 ---
-title: "Financial Background: Shaping attitude towards Improving & Protecting the Environemnt"
+title: "Attitudes on Improving & Protecting the Environment"
 date: "25/10/2015"
 output:
   html_document:
@@ -43,7 +43,7 @@ The total number of observations from 2002 to 2012 is 16,128. The observations h
 The two variables being analyzed in this report are:    
   •	incom16: the respondees family income when 16 years old &   
   •	natenvir: the respondees attitude towards Improving and protecting environment    
-Both are Ordinal (Ordered Categorical) variables. "incom16" has three level "Too Little", "About Right" & "Too Much" while "natenvir" has six levels “Far Below Average”, “Below Average”, “Average”, “Above Average”, “Far Above Average” & "Lived in Institution". The last variable "Lived in Institution" does not have any respondent in the period of our study so this is being dropped & we are treating our data for income level at 16 to be of 5 levels. 
+Both are Ordinal (Ordered Categorical) variables. "natenvir" has three levels "Too Little", "About Right" & "Too Much" while  "incom16" has six levels “Far Below Average”, “Below Average”, “Average”, “Above Average”, “Far Above Average” & "Lived in Institution". The last variable "Lived in Institution" does not have any respondent in the period of our study so this is being dropped & we are treating our data for income level at 16 to be of 5 levels. 
 
 ### Study  
 Our population of interest are the Adult residents of United States who speak English or Spanish. The study is done as a survey of individuals collecting data on demographic & sociological parameters. This is a purely observational study & there is no experimental design in place.  
@@ -57,7 +57,7 @@ The study is an observational study. There is no experimental design in place. W
 
 ### Exploratory data analysis:
 
-The GSS data that has been made available for this study has 57,061 observations of 114 variables covering the period of the survey from 1974 to 2012. In order to get data which is more tuned to the current attitudes of people & also because the concern for environment has gained a lot more momentum in the 21st century we are taking data from 2002 to 2012 for the purpose of this report. After removing all NA values this data set has 6377 observations with four variables. I have modified the column names to make them more descriptive. Giving below some quick R outputs for initla Data Exploration:  
+The GSS data that has been made available for this study has 57,061 observations of 114 variables covering the period of the survey from 1974 to 2012. In order to get data which is more tuned to the current attitudes of people & also because the concern for environment has gained a lot more momentum in the 21st century we are taking data from 2002 to 2012 for the purpose of this report. After removing all NA values this data set has 6377 observations with four variables. I have modified the column names to make them more descriptive. Giving below some quick R outputs for initial Data Exploration:  
 
 ```{r echo=FALSE, fig.width=8}
 load(url("http://bit.ly/dasi_gss_data"))
@@ -80,7 +80,7 @@ mosaicplot(splitstable[1:5,], main = "Attitude to Investment on Environment Prot
 Some key observations from the Exploratory Data Analysis:  
 
 1) The majority view (63.32% of the people surveyed between 2002 to 2012)  is that there isn't enough investment being done for improving & protecting the environment.   
-2) Responds who perceive themselves to be coming from financially stronger backgrounds feel more strongly that there i Too Little Investment. 59% in the far below average group growing to 67% in the Above Average & Far above average groups.   
+2) Responds who perceive themselves to be coming from financially stronger backgrounds feel more strongly that there is Too Little Investment. 59% in the far below average group growing to 67% in the Above Average & Far above average groups.   
 3) The actual dividing line is at the separation between affluent (Above Average & Far Above Average) and not so affluent (Far Below Average, Below Average and Average). In the Affluent group 67% feel that Too Little is being done while in the not so affluent group 62 % believe that what is being done is Too little.   
 4) We see an interesting trend when we analyze the percentage of people who believe that the investment in Improving & Protecting the Environment is "Too Little".
 
@@ -91,12 +91,12 @@ yrsum1 <- mutate(yrsum1, ratio1 = 100 * yrsum1$`Too Little`/ (yrsum1$`Too Little
 plot(yrsum1$YearOfSurvey, yrsum1$ratio1, ylab = "% Too Little", xlab = "Year", main = "Is Investment to Protect Environment Picking Up?", type = "b", col = "blue", lwd = 6, pch = 19)
 ```
 
-For a future research it will be good to see if this decreasing trend of the percentage who belive that Too Little investment is being done is within the range of statistical probabilities or is this a real trend.  
+For a future research it will be good to see if this decreasing trend of the respondents who belive that Too Little investment is being done is within the range of statistical probabilities or is this a real trend.  
 
-5) For the purpose of our current interest we can see a correlation between the perceived family income level at 16 & the attitude toward investment in improving & protecting the environment. We will proceed with a Chi-Square test.    
+5) For the purpose of our current interest we can see a correlation between the perceived family income level at 16 & the attitude toward investment in improving & protecting the environment. We will proceed with a selecting a test type for checking whether this trend we see can be generalized for the hole population of USD citizens..    
 
 ### Inference:
-We are trying to infer the correlation between two Categorical Variables. The firt one has 5 levels of self perceived income level of the family when the respondent was 16 years old. The second caputres three levels on the respondents attitude towards investment on Improving & Protecting the environment. We will need to do a CHI-SQUARE INDEPENDENCE TEST. Our input data is as given below:
+We are trying to infer the correlation between two Categorical Variables. The firt one has 5 levels of self perceived income level of the family when the respondent was 16 years old. The second caputres three levels on the respondents attitude towards investment on Improving & Protecting the environment. Our input data is as given below:
 
 ```{r echo=FALSE, fig.width=8}
 chsqrtdata <- dcast(mysubset, FamilyIncomeat16~InvesttoProtectEnviron)
@@ -106,14 +106,14 @@ chsqrtdata
 This data summarizez the total number of respondents for the levels within our two categorical variables.  
 
 #### Hypotheses    
-Null Hypotheses H0: For a Citizen of the United States there is no correlation between their family income level at the age of 16 and their attitude towards the Investment in Improving & Protecting the climate.  
-Alternate Hypothesis Ha: The attitude of an American citizen towards the investment being done for improving and protecting the environment is linked to their own perception of their family income level when they were at an age of 16 years.
+Null Hypotheses H0: For a Citizen of the United States there is no correlation between their perception of their family income level when they were at the age of 16 and their attitude towards the Investment being done for Improving & Protecting the climate.  
+Alternate Hypothesis Ha: The attitude of American citizens towards the investment being done for improving and protecting the environment is linked to their own perception of their family income level when they were at an age of 16 years.
 
 #### Checking Conditions
 1) Independence: 
     - The sample is a random sample as can be confirmed by studing the survey methodology  
     - The number of respondents is less than 10% of the US population  
-    - Each case only contributes to one cell. So each case is one of 15 unique combinations of income level (5 levels) & attitude to environment (3 levels). Put another way eevry respondent is uniquely at a specific level for each of the two categorical variables so a person cannot be both Average & Above Average or say that Too Little is being done & just enough is being done, those responses are not possible so the condition is satisifed.    
+    - Each case only contributes to one cell. So each case is one of 15 unique combinations of income level (5 levels) & attitude to environment (3 levels). Put another way every respondent is uniquely at a specific level for each of the two categorical variables so a person cannot be both Average & Above Average or say that Too Little is being done & just enough is being done, those responses are not possible so the condition is satisifed.    
 2) Sample Size: From the data above we can confirm that each cell has atleast 5 counts. The minimum being 8.    
 
 #### Type of Test
@@ -128,10 +128,10 @@ CrossTable(mysubset$FamilyIncomeat16, mysubset$InvesttoProtectEnviron, expected 
 The R code we have use is shown in the appendix. The steps are explained below:  
 The three elements in each box are the " N - Actual number of Observations", " Expected N - The expected count" & the "Chi Square Contribution towards the Chi Square test statistic".  
 The expected count is calculated as given below:  
-  Expected Count (row i; col j) = (row i total) * (column j total) / table total  
-  Expected count(row 2; col 2) = 1634*1807 / 6377 = 463.01  
+  Expected Count (row i; col j) = (row i total) x (column j total) / table total  
+  Expected count(row 2; col 2) = 1634 x 1807 / 6377 = 463.01  
 To find Chi Square Test Statistic  first for each table count we calculate the (observed count - expected count)^2 / expected count e.g. for the 1st row, 1st column we have (352 - 375.495)^2/ 375.495 = 1.47. For all the Table counts we add up this value & arrive at our X^2 the Chi Square Statistic which in this case is 22.99841.  
-  The degree of freedom df = (number of rows minus 1) * (number of columns minus 1) = 4*2 = 8  
+  The degree of freedom df = (number of rows minus 1) x (number of columns minus 1) = 4 x 2 = 8  
   Finally from Tables or using R commands (pchisq) we find the p value which in this case is 0.33%. 
 
 #### Inference
@@ -161,9 +161,15 @@ Another trend we perceived was that the percentage of persons who believe that T
 5) Various Stackoverflow archives, CRAN documentation for code clarifications.  
 
 
-### Appendix:
+### Appendix 1: Data
 
-R Code Used for the Project:
+```{r echo=FALSE}
+head(mysubset, 30)
+
+```
+
+
+#### Appendix 2: R Code Used for the Project:
 
 ```{r eval=FALSE}
 load(url("http://bit.ly/dasi_gss_data"))
